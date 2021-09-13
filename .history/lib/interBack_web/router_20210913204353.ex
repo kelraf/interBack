@@ -28,7 +28,7 @@ defmodule InterBackWeb.Router do
   scope "/api", InterBackWeb do
     pipe_through :api
 
-    post "/users/auth/register", UserController, :create
+    post "/auth/users", UserController, :create
     post "/users/auth/login", UserController, :login
   end
 
