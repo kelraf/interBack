@@ -20,7 +20,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
     |> cast(attrs, [:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
     |> validate_required([:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
     |> validateWarehouseProduct()
-    |> IO.inspect
+    # |> IO.inspect
   end
 
   defp validateWarehouseProduct(changeset) do
@@ -47,7 +47,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
                 new_warehouseproduct = 
                   warehouseproduct
                   |> Map.from_struct
-                  |> Map.drop([:__meta__, :user, :inserted_at, :updated_at, :id])
+                  |> Map.drop([:__meta__, :user])
                   |> Map.put(:quantity, warehouse_product_quantity - quantity)
 
                   changeset

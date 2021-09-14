@@ -59,7 +59,7 @@ defmodule InterBack.StoreProducts do
     Multi.new()
     |> Multi.insert(:store_product, changeset_results)
     |> Multi.update(:warehouse_product, WarehouseProduct.changeset(%WarehouseProduct{}, warehouse_product))
-    |> Repo.transaction()
+    # |> Repo.transaction()
     |> IO.inspect
 
   end

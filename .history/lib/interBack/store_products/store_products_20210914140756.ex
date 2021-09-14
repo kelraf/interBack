@@ -51,16 +51,12 @@ defmodule InterBack.StoreProducts do
   """
   def create_store_product(attrs \\ %{}) do
     changeset_results = %StoreProduct{} |> StoreProduct.changeset(attrs) #|> Repo.insert()
-    warehouse_product = get_field(changeset_results, :new_warehouseproduct)
+    # warehouse_product = 
 
-    # IO.inspect changeset_results
-    # IO.inspect warehouse_product
+    IO.inspect changeset_results
 
-    Multi.new()
-    |> Multi.insert(:store_product, changeset_results)
-    |> Multi.update(:warehouse_product, WarehouseProduct.changeset(%WarehouseProduct{}, warehouse_product))
-    |> Repo.transaction()
-    |> IO.inspect
+    # Multi.new()
+    # |> Multi.insert(:store_product, )
 
   end
 

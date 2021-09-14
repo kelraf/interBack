@@ -47,7 +47,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
                 new_warehouseproduct = 
                   warehouseproduct
                   |> Map.from_struct
-                  |> Map.drop([:__meta__, :user, :inserted_at, :updated_at, :id])
+                  |> Map.drop([:__meta__, :user])
                   |> Map.put(:quantity, warehouse_product_quantity - quantity)
 
                   changeset
