@@ -33,7 +33,7 @@ defmodule Seeds do
         
     end
 
-    defp createStoreAttendant do
+    defp createStoreAttendants do
 
         Accounts.create_user(%{
             name: "Store Attendant One",
@@ -47,7 +47,7 @@ defmodule Seeds do
 
     def run() do
 
-        createStoreAttendant()
+        createStoreAttendants()
 
         createSuperUser()
         |> createStore()
