@@ -45,44 +45,11 @@ defmodule Seeds do
         
     end
 
-    defp createWarehouseProducts({:ok, %{user_id: user_id}}) do
+    # defp createWarehouseProducts({:ok, %{user_id: user_id}}) do
+    #     WarehouseProducts.create_warehouse_product(%{
 
-        WarehouseProducts.create_warehouse_product(%{
-            user_id: user_id,
-            product_name: "Supaloaf",
-            category: "800g",
-            quantity: 9000
-        })
-
-        WarehouseProducts.create_warehouse_product(%{
-            user_id: user_id,
-            product_name: "Supaloaf",
-            category: "1200g",
-            quantity: 9000
-        })
-
-        WarehouseProducts.create_warehouse_product(%{
-            user_id: user_id,
-            product_name: "Ndolo Baking Floor",
-            category: "2kg",
-            quantity: 9000
-        })
-
-        WarehouseProducts.create_warehouse_product(%{
-            user_id: user_id,
-            product_name: "Ndolo Baking Floor",
-            category: "10kg",
-            quantity: 9000
-        })
-
-        WarehouseProducts.create_warehouse_product(%{
-            user_id: user_id,
-            product_name: "Ndolo Maize Floor",
-            category: "2kg",
-            quantity: 9000
-        })
-
-    end
+    #     })
+    # end
 
     def run() do
 
@@ -90,7 +57,7 @@ defmodule Seeds do
 
         createSuperUser()
         |> createStore()
-        |> createWarehouseProducts()
+        |> IO.inspect
     end
     
 end

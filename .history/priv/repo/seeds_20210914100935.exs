@@ -91,6 +91,7 @@ defmodule Seeds do
         createSuperUser()
         |> createStore()
         |> createWarehouseProducts()
+        |> IO.inspect
     end
     
 end
