@@ -51,40 +51,27 @@ defmodule InterBack.StoreProducts do
   """
   def create_store_product(attrs \\ %{}) do
 
-    changeset_results = %StoreProduct{} |> StoreProduct.changeset(attrs) #|> IO.inspect #|> Repo.insert()
+    changeset_results = %StoreProduct{} |> StoreProduct.changeset(attrs) |> IO.inspect #|> Repo.insert()
 
-    if changeset_results.valid? do
-      
-      warehouse_product_changeset = 
-        changeset_results
-        |> get_field(:new_warehouseproduct_changeset)
-        |> Map.get(:w_changeset)
+    # warehouse_product_changeset = 
+    #   changeset_results
+    #   |> get_field(:new_warehouseproduct_changeset)
+    #   |> Map.get(:w_changeset)
 
-      multi_results = 
-        Multi.new()
-        |> Multi.insert(:store_product, changeset_results)
-        |> Multi.update(:warehouse_product, warehouse_product_changeset)
-        |> Repo.transaction()
-        |> IO.inspect
 
-      case multi_results do
-        {:ok, %{store_product: store_product, warehouse_product: _warehouse_product}} ->
-          {:ok, store_product}
-        {:error, _failed_operation, _failed_value, _changes_so_far} -> 
-          {
-            :error,
-              action: :insert,
-              changes: %{},
-              errors: [
-                transation: {"Failed"}              
-              ],
-              valid?: false
-          }
-      end
+    # multi_results = 
+    #   Multi.new()
+    #   |> Multi.insert(:store_product, changeset_results)
+    #   |> Multi.update(:warehouse_product, warehouse_product_changeset)
+    #   |> Repo.transaction()
+    #   |> IO.inspect
 
-    else 
-      {:error, changeset_results}
-    end
+      # case multi_results do
+      #   {:ok, %{store_product: store_product, warehouse_product: _warehouse_product}} ->
+      #     store_product
+      #   {:error, failed_operation, failed_value, changes_so_far} -> 
+          
+      # end
 
   end
 
