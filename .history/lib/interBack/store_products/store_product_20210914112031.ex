@@ -6,7 +6,6 @@ defmodule InterBack.StoreProducts.StoreProduct do
   schema "storeproducts" do
     field :min_quantity, :integer, defaulf: 0
     field :quantity, :integer
-    field :new_warehouseproduct_changeset, :map, virtual: true
 
     belongs_to(:user, User)
     belongs_to(:store, Store)
@@ -25,32 +24,19 @@ defmodule InterBack.StoreProducts.StoreProduct do
   defp validateWarehouseProduct(changeset) do
 
     warehouseproduct_id = get_field(changeset, :warehouseproduct_id)
-    quantity = get_field(changeset, :quantity)
 
     case warehouseproduct_id do
       nil -> changeset
       _ -> 
-        warehouseproduct = Repo.get_by(WarehouseProduct, id: warehouseproduct_id)
+        warehouseproduct_ = Repo.get_by(WarehouseProduct, warehouseproduct_id: warehouseproduct_id)
 
-        case warehouseproduct do
+        case warehouseproduct_ do
           nil -> add_error(changeset, :warehouseproduct_id, "The warehouse product does not exist")
 
-          %WarehouseProduct{} = warehouseproduct ->
-
-            warehouse_product_quantity = Map.get(warehouseproduct, :quantity);
-            
-            cond do
-              quantity == nil -> changeset
-              warehouse_product_quantity < quantity -> add_error(changeset, :quantity, "Quantity Exceeds the available products in warehouse")
-              true ->
-                w_changeset = 
-                  warehouseproduct
-                  |> WarehouseProduct.changeset(%{quantity: warehouse_product_quantity - quantity})
-
-                  changeset
-                  |> put_change(:new_warehouseproduct_changeset, %{w_changeset: w_changeset})
-            end
-
+          {:ok, %WarehouseProduct{} = warehouseproduct} ->
+            IO.inspect(warehouseproduct)
+            changeset
+            # if Map.get(warehouseproduct, :)
           _ -> add_error(changeset, :warehouseproduct_id, "Ooops an error occured")
         end
 

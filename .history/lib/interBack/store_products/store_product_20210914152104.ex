@@ -6,7 +6,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
   schema "storeproducts" do
     field :min_quantity, :integer, defaulf: 0
     field :quantity, :integer
-    field :new_warehouseproduct_changeset, :map, virtual: true
+    field :new_warehouseproduct, :map, virtual: true
 
     belongs_to(:user, User)
     belongs_to(:store, Store)
@@ -20,6 +20,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
     |> cast(attrs, [:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
     |> validate_required([:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
     |> validateWarehouseProduct()
+    |> IO.inspect
   end
 
   defp validateWarehouseProduct(changeset) do
@@ -43,12 +44,14 @@ defmodule InterBack.StoreProducts.StoreProduct do
               quantity == nil -> changeset
               warehouse_product_quantity < quantity -> add_error(changeset, :quantity, "Quantity Exceeds the available products in warehouse")
               true ->
-                w_changeset = 
+                new_warehouseproduct = 
                   warehouseproduct
-                  |> WarehouseProduct.changeset(%{quantity: warehouse_product_quantity - quantity})
+                  |> Map.from_struct
+                  |> Map.drop([:__meta__, :user, :inserted_at, :updated_at, :id])
+                  |> Map.put(:quantity, warehouse_product_quantity - quantity)
 
                   changeset
-                  |> put_change(:new_warehouseproduct_changeset, %{w_changeset: w_changeset})
+                  |> put_change(:new_warehouseproduct, new_warehouseproduct)
             end
 
           _ -> add_error(changeset, :warehouseproduct_id, "Ooops an error occured")

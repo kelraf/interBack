@@ -6,7 +6,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
   schema "storeproducts" do
     field :min_quantity, :integer, defaulf: 0
     field :quantity, :integer
-    field :new_warehouseproduct_changeset, :map, virtual: true
+    field :new_warehouseproduct, :map, virtual: true
 
     belongs_to(:user, User)
     belongs_to(:store, Store)
@@ -48,7 +48,8 @@ defmodule InterBack.StoreProducts.StoreProduct do
                   |> WarehouseProduct.changeset(%{quantity: warehouse_product_quantity - quantity})
 
                   changeset
-                  |> put_change(:new_warehouseproduct_changeset, %{w_changeset: w_changeset})
+                  |> put_change(:new_warehouseproduct, %{w_changeset: w_changeset})
+                  |> IO.inspect
             end
 
           _ -> add_error(changeset, :warehouseproduct_id, "Ooops an error occured")

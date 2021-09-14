@@ -70,16 +70,8 @@ defmodule InterBack.StoreProducts do
       case multi_results do
         {:ok, %{store_product: store_product, warehouse_product: _warehouse_product}} ->
           {:ok, store_product}
-        {:error, _failed_operation, _failed_value, _changes_so_far} -> 
-          {
-            :error,
-              action: :insert,
-              changes: %{},
-              errors: [
-                transation: {"Failed"}              
-              ],
-              valid?: false
-          }
+        {:error, failed_operation, failed_value, changes_so_far} -> 
+          "XXXXXXXXXXXXXXXXXX"
       end
 
     else 

@@ -4,7 +4,6 @@ defmodule InterBack.StoreProducts do
   """
 
   import Ecto.Query, warn: false
-  import Ecto.Changeset
   alias InterBack.{Repo, StoreProducts.StoreProduct, WarehouseProducts.WarehouseProduct}
   alias Ecto.Multi
 
@@ -50,41 +49,11 @@ defmodule InterBack.StoreProducts do
 
   """
   def create_store_product(attrs \\ %{}) do
+    %StoreProduct{}
+    |> StoreProduct.changeset(attrs)
+    |> Repo.insert()
 
-    changeset_results = %StoreProduct{} |> StoreProduct.changeset(attrs) #|> IO.inspect #|> Repo.insert()
-
-    if changeset_results.valid? do
-      
-      warehouse_product_changeset = 
-        changeset_results
-        |> get_field(:new_warehouseproduct_changeset)
-        |> Map.get(:w_changeset)
-
-      multi_results = 
-        Multi.new()
-        |> Multi.insert(:store_product, changeset_results)
-        |> Multi.update(:warehouse_product, warehouse_product_changeset)
-        |> Repo.transaction()
-        |> IO.inspect
-
-      case multi_results do
-        {:ok, %{store_product: store_product, warehouse_product: _warehouse_product}} ->
-          {:ok, store_product}
-        {:error, _failed_operation, _failed_value, _changes_so_far} -> 
-          {
-            :error,
-              action: :insert,
-              changes: %{},
-              errors: [
-                transation: {"Failed"}              
-              ],
-              valid?: false
-          }
-      end
-
-    else 
-      {:error, changeset_results}
-    end
+    # Multi.new()
 
   end
 

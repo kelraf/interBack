@@ -49,6 +49,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
 
                   changeset
                   |> put_change(:new_warehouseproduct_changeset, %{w_changeset: w_changeset})
+                  |> IO.inspect
             end
 
           _ -> add_error(changeset, :warehouseproduct_id, "Ooops an error occured")
