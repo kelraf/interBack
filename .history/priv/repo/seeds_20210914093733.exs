@@ -25,7 +25,7 @@ defmodule Seeds do
         })
     end
 
-    defp createStore({:ok, %{id: id}}) do
+    defp createStore(%{id: index}) do
         Stores.create_store(%{
             user_id: 1,
             store_name: "Store one"
@@ -34,8 +34,7 @@ defmodule Seeds do
     end
 
     def run() do
-        createSuperUser()
-        |> createStore()
+        createSuperUser() |> createStore()
     end
     
 end

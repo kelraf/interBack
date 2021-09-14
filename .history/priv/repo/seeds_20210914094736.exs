@@ -35,6 +35,10 @@ defmodule Seeds do
 
     def run() do
         createSuperUser()
+        # |> IO.inspect
+        # |> Map.from_struct
+        # |> IO.inspect
+        # |> Map.drop([:__meta__])
         |> createStore()
     end
     
