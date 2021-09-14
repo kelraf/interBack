@@ -46,9 +46,13 @@ defmodule InterBack.StoreProducts.StoreProduct do
               true ->
                 new_warehouseproduct = 
                   warehouseproduct
+                  |> IO.inspect(label: "xxxxxxxx 1")
                   |> Map.from_struct
+                  |> IO.inspect(label: "xxxxxxxx 2")
                   |> Map.drop([:__meta__, :user])
+                  |> IO.inspect(label: "xxxxxxxx 3")
                   |> Map.put(:quantity, warehouse_product_quantity - quantity)
+                  |> IO.inspect(label: "xxxxxxxx 4")
 
                   changeset
                   |> put_change(:new_warehouseproduct, new_warehouseproduct)

@@ -6,7 +6,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
   schema "storeproducts" do
     field :min_quantity, :integer, defaulf: 0
     field :quantity, :integer
-    field :new_warehouseproduct, :map, virtual: true
+    field :new_warehouseproduct, virtual: true
 
     belongs_to(:user, User)
     belongs_to(:store, Store)

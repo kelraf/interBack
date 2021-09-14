@@ -4,7 +4,7 @@ defmodule InterBack.StoreProducts do
   """
 
   import Ecto.Query, warn: false
-  alias InterBack.{Repo, WarehouseProducts}
+  alias InterBack.Repo
 
   alias InterBack.StoreProducts.StoreProduct
 
