@@ -43,6 +43,7 @@ defmodule InterBackWeb.Router do
     resources "/warehouseproducts", WarehouseProductController
     resources "/storeproducts", StoreProductController
     resources "/storesales", StoreSaleController
+    resources "/reorders", ReorderController
 
     get "/reorders", ReorderController, :index
     get "/reorders/:id", ReorderController, :show

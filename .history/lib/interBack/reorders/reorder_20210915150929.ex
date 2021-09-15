@@ -7,6 +7,7 @@ defmodule InterBack.Reorders.Reorder do
     field :processed, :boolean, default: false
     field :quantity, :integer, default: 0
     field :store_id, :integer
+    field :storeproduct_id, :integer
     belongs_to(:warehouseproduct, WarehouseProduct)
     belongs_to(:storeproduct, StoreProduct)
 
