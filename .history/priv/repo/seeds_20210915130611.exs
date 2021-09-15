@@ -95,14 +95,13 @@ defmodule Seeds do
 
     def run() do
 
-        createStoreAttendant()
+        attendant = createStoreAttendant()
 
         createSuperUser()
             |> createStore()
             |> createWarehouseProducts()
 
         createStoreAttendantRelationShip()
-        
     end
     
 end

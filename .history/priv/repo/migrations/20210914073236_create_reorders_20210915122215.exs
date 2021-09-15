@@ -7,7 +7,7 @@ defmodule InterBack.Repo.Migrations.CreateReorders do
       add :warehouseproduct_id, references(:warehouseproducts, on_delete: :nothing), null: false
       add :storeproduct_id, :integer
       add :processed, :boolean, default: false, null: false
-      add :quantity, :integer, defaulf: 0, null: false
+      add :quantity, :integer
 
       timestamps()
     end
