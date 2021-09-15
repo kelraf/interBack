@@ -7,7 +7,6 @@ defmodule InterBack.Reorders.Reorder do
     field :processed, :boolean, default: false
     field :quantity, :integer, default: 0
     field :store_id, :integer
-    field :changesets, :map, virtual: true
     belongs_to(:warehouseproduct, WarehouseProduct)
     belongs_to(:storeproduct, StoreProduct)
 
@@ -28,7 +27,7 @@ defmodule InterBack.Reorders.Reorder do
       changeset
     else
 
-      data = Repo.preload(changeset.data, [:warehouseproduct, :storeproduct]) |> IO.inspect
+      data = Repo.preload(changeset.data, [:warehouseproduct, :storeproduct])
 
       if data.warehouseproduct != nil && data.storeproduct != nil do
 
@@ -43,14 +42,9 @@ defmodule InterBack.Reorders.Reorder do
           cond do
             quantity > data.warehouseproduct.quantity -> add_error(changeset, :quantity, "The quantity requested exceeds the available products in the warehouse")
             data.processed -> add_error(changeset, :processed, "Oops!!! Reorder has been processed")
-            quantity <= 0 -> add_error(changeset, :quantity, "Quantity can't be zero")
             true -> 
               w_p_changeset = WarehouseProduct.changeset(data.warehouseproduct, %{quantity: (data.warehouseproduct.quantity - quantity)})
-              s_p_changeset = StoreProduct.changeset(data.storeproduct, %{quantity: (data.storeproduct.quantity + quantity)}) |> delete_change(:new_warehouseproduct_changeset)
-              changeset
-                |> put_change(:processed, true)
-                |> put_change(:changesets, %{w_p_changeset: w_p_changeset, s_p_changeset: s_p_changeset})  
-                |> IO.inspect          
+              s_p_changeset = StoreProduct.changeset(data.storeproduct, %{quantity: (data.storeproduct.quantity + quantity)})            
           end
 
         end

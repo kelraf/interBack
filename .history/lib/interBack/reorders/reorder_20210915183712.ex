@@ -48,9 +48,9 @@ defmodule InterBack.Reorders.Reorder do
               w_p_changeset = WarehouseProduct.changeset(data.warehouseproduct, %{quantity: (data.warehouseproduct.quantity - quantity)})
               s_p_changeset = StoreProduct.changeset(data.storeproduct, %{quantity: (data.storeproduct.quantity + quantity)}) |> delete_change(:new_warehouseproduct_changeset)
               changeset
-                |> put_change(:processed, true)
-                |> put_change(:changesets, %{w_p_changeset: w_p_changeset, s_p_changeset: s_p_changeset})  
-                |> IO.inspect          
+              |> put_change(:processed, true)
+              |> put_change(:changesets, %{w_p_changeset: w_p_changeset, s_p_changeset: s_p_changeset})  
+              |> IO.inspect          
           end
 
         end

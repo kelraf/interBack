@@ -1,57 +1,76 @@
-defmodule InterBack.StoreSales do
+defmodule InterBack.Reorders do
   @moduledoc """
-  The StoreSales context.
+  The Reorders context.
   """
 
   import Ecto.Query, warn: false
-  alias InterBack.{Repo, StoreSales.StoreSale}
-  import Ecto.Changeset
-  alias Ecto.Multi
+  alias InterBack.Repo
+
+  alias InterBack.Reorders.Reorder
+
   @doc """
-  Returns the list of storesales.
+  Returns the list of reorders.
 
   ## Examples
 
-      iex> list_storesales()
-      [%StoreSale{}, ...]
+      iex> list_reorders()
+      [%Reorder{}, ...]
 
   """
-  def list_storesales do
-    Repo.all(StoreSale)
+  def list_reorders do
+    Repo.all(Reorder)
   end
 
   @doc """
-  Gets a single store_sale.
+  Gets a single reorder.
 
-  Raises `Ecto.NoResultsError` if the Store sale does not exist.
+  Raises `Ecto.NoResultsError` if the Reorder does not exist.
 
   ## Examples
 
-      iex> get_store_sale!(123)
-      %StoreSale{}
+      iex> get_reorder!(123)
+      %Reorder{}
 
-      iex> get_store_sale!(456)
+      iex> get_reorder!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_store_sale!(id), do: Repo.get!(StoreSale, id)
+  def get_reorder!(id), do: Repo.get!(Reorder, id)
 
   @doc """
-  Creates a store_sale.
+  Creates a reorder.
 
   ## Examples
 
-      iex> create_store_sale(%{field: value})
-      {:ok, %StoreSale{}}
+      iex> create_reorder(%{field: value})
+      {:ok, %Reorder{}}
 
-      iex> create_store_sale(%{field: bad_value})
+      iex> create_reorder(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_store_sale(attrs \\ %{}) do
+  def create_reorder(attrs \\ %{}) do
+    %Reorder{}
+    |> Reorder.changeset(attrs)
+    |> Repo.insert()
+  end
 
-    changeset_results = %StoreSale{} |> StoreSale.changeset(attrs) #|> Repo.insert()
+  @doc """
+  Updates a reorder.
 
+  ## Examples
+
+      iex> update_reorder(reorder, %{field: new_value})
+      {:ok, %Reorder{}}
+
+      iex> update_reorder(reorder, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_reorder(%Reorder{} = reorder, attrs) do
+    
+    changeset_results = reorder |> Reorder.changeset(attrs)
+    
     if changeset_results.valid? do
       
       store_product_changeset = 
@@ -114,53 +133,36 @@ defmodule InterBack.StoreSales do
       end
     else 
       {:error, changeset_results}
-    end 
+    end
+
   end
 
   @doc """
-  Updates a store_sale.
+  Deletes a reorder.
 
   ## Examples
 
-      iex> update_store_sale(store_sale, %{field: new_value})
-      {:ok, %StoreSale{}}
+      iex> delete_reorder(reorder)
+      {:ok, %Reorder{}}
 
-      iex> update_store_sale(store_sale, %{field: bad_value})
+      iex> delete_reorder(reorder)
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_store_sale(%StoreSale{} = store_sale, attrs) do
-    store_sale
-    |> StoreSale.changeset(attrs)
-    |> Repo.update()
+  def delete_reorder(%Reorder{} = reorder) do
+    Repo.delete(reorder)
   end
 
   @doc """
-  Deletes a store_sale.
+  Returns an `%Ecto.Changeset{}` for tracking reorder changes.
 
   ## Examples
 
-      iex> delete_store_sale(store_sale)
-      {:ok, %StoreSale{}}
-
-      iex> delete_store_sale(store_sale)
-      {:error, %Ecto.Changeset{}}
+      iex> change_reorder(reorder)
+      %Ecto.Changeset{data: %Reorder{}}
 
   """
-  def delete_store_sale(%StoreSale{} = store_sale) do
-    Repo.delete(store_sale)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking store_sale changes.
-
-  ## Examples
-
-      iex> change_store_sale(store_sale)
-      %Ecto.Changeset{data: %StoreSale{}}
-
-  """
-  def change_store_sale(%StoreSale{} = store_sale, attrs \\ %{}) do
-    StoreSale.changeset(store_sale, attrs)
+  def change_reorder(%Reorder{} = reorder, attrs \\ %{}) do
+    Reorder.changeset(reorder, attrs)
   end
 end

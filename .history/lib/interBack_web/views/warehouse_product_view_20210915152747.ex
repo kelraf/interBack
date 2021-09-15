@@ -1,6 +1,6 @@
 defmodule InterBackWeb.WarehouseProductView do
   use InterBackWeb, :view
-  alias InterBackWeb.{WarehouseProductView, UserView}
+  alias InterBackWeb.{WarehouseProductView, UserView, ReorderView}
 
   def render("index.json", %{warehouseproducts: warehouseproducts}) do
     %{data: render_many(warehouseproducts, WarehouseProductView, "warehouse_product.json")}

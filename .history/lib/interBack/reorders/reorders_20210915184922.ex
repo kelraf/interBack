@@ -4,8 +4,6 @@ defmodule InterBack.Reorders do
   """
 
   import Ecto.Query, warn: false
-  import Ecto.Changeset
-  alias Ecto.Multi
   alias InterBack.Repo
 
   alias InterBack.Reorders.Reorder

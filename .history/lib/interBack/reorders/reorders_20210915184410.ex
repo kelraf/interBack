@@ -4,8 +4,6 @@ defmodule InterBack.Reorders do
   """
 
   import Ecto.Query, warn: false
-  import Ecto.Changeset
-  alias Ecto.Multi
   alias InterBack.Repo
 
   alias InterBack.Reorders.Reorder
@@ -80,21 +78,20 @@ defmodule InterBack.Reorders do
           |> get_field(:changesets)
           |> Map.get(:s_p_changeset)
 
-        w_p_changeset = 
+        reorder_changeset = 
           changeset_results
-          |> get_field(:changesets)
-          |> Map.get(:w_p_changeset)
+          |> get_field(:store_product_changeset)
+          |> Map.get(:r_changeset)
 
         multi_results = 
           Multi.new()
-          |> Multi.update(:s_p_info, s_p_changeset)
-          |> Multi.update(:w_p_info, w_p_changeset)
-          |> Multi.update(:reorder, changeset_results)
+          |> Multi.insert(:store_sale, changeset_results)
+          |> Multi.update(:store_product, store_product_changeset)
           |> Repo.transaction()
 
         case multi_results do
-          {:ok, %{reorder: reorder, s_p_info: _s_p_info, w_p_info: _w_p_info}} ->
-            {:ok, reorder}
+          {:ok, %{store_sale: store_sale, store_product: _store_product}} ->
+            {:ok, store_sale}
           {:error, _failed_operation, _failed_value, _changes_so_far} -> 
             {
               :error,
