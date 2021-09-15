@@ -9,7 +9,7 @@ defmodule InterBack.WarehouseProducts.WarehouseProduct do
     field :quantity, :integer
 
     belongs_to(:user, User)
-    has_many(:reorders, Reorder, foreign_key: :warehouseproduct_id)
+    has_many(:reorders, Reorder)
 
     timestamps()
   end

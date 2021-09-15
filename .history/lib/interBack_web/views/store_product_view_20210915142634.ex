@@ -20,7 +20,7 @@ defmodule InterBackWeb.StoreProductView do
       store: render_one(store_product.store, __MODULE__, "store.json", as: :store),
       user: render_one(store_product.user, UserView, "user.json", as: :user),
       warehouse_product: render_one(store_product.warehouseproduct, __MODULE__, "warehouse_product.json", as: :warehouse_product),
-      reorders: render_many(store_product.reorders, ReorderView, "reorder.json", as: :reorder)
+      reorders: render_many(store_product.reorders, ReorderView, "", as: :reorders)
     }
   end
 

@@ -1,7 +1,7 @@
 defmodule InterBack.StoreProducts.StoreProduct do
   use Ecto.Schema
   import Ecto.Changeset
-  alias InterBack.{Accounts.User, Stores.Store, Repo, WarehouseProducts.WarehouseProduct, Reorders.Reorder}
+  alias InterBack.{Accounts.User, Stores.Store, Repo, WarehouseProducts.WarehouseProduct}
 
   schema "storeproducts" do
     field :min_quantity, :integer, defaulf: 0
@@ -11,7 +11,6 @@ defmodule InterBack.StoreProducts.StoreProduct do
     belongs_to(:user, User)
     belongs_to(:store, Store)
     belongs_to(:warehouseproduct, WarehouseProduct)
-    has_many(:reorders, Reorder, foreign_key: :storeproduct_id)
     timestamps()
   end
 

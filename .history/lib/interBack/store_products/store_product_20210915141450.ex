@@ -1,7 +1,7 @@
 defmodule InterBack.StoreProducts.StoreProduct do
   use Ecto.Schema
   import Ecto.Changeset
-  alias InterBack.{Accounts.User, Stores.Store, Repo, WarehouseProducts.WarehouseProduct, Reorders.Reorder}
+  alias InterBack.{Accounts.User, Stores.Store, Repo, WarehouseProducts.WarehouseProduct}
 
   schema "storeproducts" do
     field :min_quantity, :integer, defaulf: 0
@@ -11,7 +11,6 @@ defmodule InterBack.StoreProducts.StoreProduct do
     belongs_to(:user, User)
     belongs_to(:store, Store)
     belongs_to(:warehouseproduct, WarehouseProduct)
-    has_many(:reorders, Reorder, foreign_key: :storeproduct_id)
     timestamps()
   end
 
@@ -20,10 +19,10 @@ defmodule InterBack.StoreProducts.StoreProduct do
     store_product
     |> cast(attrs, [:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
     |> validate_required([:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
-    |> dispatchProduct(update)
+    |> validateWarehouseProduct(update)
   end
 
-  defp dispatchProduct(changeset, _update) do
+  defp validateWarehouseProduct(changeset, _update) do
 
     warehouseproduct_id = get_field(changeset, :warehouseproduct_id)
     quantity = get_field(changeset, :quantity)

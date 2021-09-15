@@ -11,13 +11,11 @@ defmodule InterBackWeb.ReorderView do
   end
 
   def render("reorder.json", %{reorder: reorder}) do
-    %{
-      id: reorder.id,
+    %{id: reorder.id,
       store_id: reorder.store_id,
       warehouseproduct_id: reorder.warehouseproduct_id,
       storeproduct_id: reorder.storeproduct_id,
       processed: reorder.processed,
-      quantity: reorder.quantity
-    }
+      quantity: reorder.quantity}
   end
 end

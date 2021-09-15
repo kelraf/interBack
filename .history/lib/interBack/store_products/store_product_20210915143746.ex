@@ -11,7 +11,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
     belongs_to(:user, User)
     belongs_to(:store, Store)
     belongs_to(:warehouseproduct, WarehouseProduct)
-    has_many(:reorders, Reorder, foreign_key: :storeproduct_id)
+    has_many(:reorders, Reorder)
     timestamps()
   end
 
