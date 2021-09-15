@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :interBack, InterBackWeb.Endpoint,
-  url: [host: "https://inter-back.herokuapp.com/", port: 443],
+  url: [host: "https://inter-back.herokuapp.com/", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
