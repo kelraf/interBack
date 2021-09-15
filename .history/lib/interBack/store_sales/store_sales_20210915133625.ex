@@ -112,10 +112,10 @@ defmodule InterBack.StoreSales do
                 valid?: false
             }
         end
+      else 
+        {:error, changeset_results}
       end
-    else 
-      {:error, changeset_results}
-    end 
+
   end
 
   @doc """

@@ -4,7 +4,7 @@ defmodule InterBack.Reorders.Reorder do
 
   schema "reorders" do
     field :processed, :boolean, default: false
-    field :quantity, :integer, default: 0
+    field :quantity, :integer, defaulf: 0
     field :store_id, :integer
     field :storeproduct_id, :integer
     field :warehouseproduct_id, :integer

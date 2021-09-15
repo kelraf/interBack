@@ -2,7 +2,7 @@ defmodule InterBack.StoreSales.StoreSale do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias InterBack.{Repo, StoreProducts.StoreProduct, Reorders.Reorder}
+  alias InterBack.{Repo, StoreProducts.StoreProduct}
 
   schema "storesales" do
     field :quantity, :integer
@@ -10,7 +10,6 @@ defmodule InterBack.StoreSales.StoreSale do
     field :storeproduct_id, :integer
     field :user_id, :integer
     field :warehouseproduct_id, :integer
-    field :store_product_changeset, :map, virtual: true
 
     timestamps()
   end
@@ -21,7 +20,6 @@ defmodule InterBack.StoreSales.StoreSale do
     |> cast(attrs, [:storeproduct_id, :quantity, :warehouseproduct_id, :store_id, :user_id])
     |> validate_required([:storeproduct_id, :quantity, :warehouseproduct_id, :store_id, :user_id])
     |> noZeroQuantity
-    |> calcSale
   end
 
   defp noZeroQuantity(changeset) do
@@ -50,34 +48,10 @@ defmodule InterBack.StoreSales.StoreSale do
         cond do
           storeproduct == nil -> add_error(changeset, :storeproduct_id, "The store product does not exist")
           sale_quantity > Map.get(storeproduct, :quantity) -> add_error(changeset, :quantity, "Quantity Exceeds the available products in store")
-          true ->
-
-            s_changeset = 
-              storeproduct 
-              |> StoreProduct.changeset(%{quantity: Map.get(storeproduct, :quantity) - sale_quantity}) 
-              |> delete_change(:new_warehouseproduct_changeset)
-
-            if (Map.get(storeproduct, :quantity) - sale_quantity) <= Map.get(storeproduct, :min_quantity) do
-
-              r_changeset = 
-                %Reorder{}
-                |> Reorder.changeset(%{
-                  store_id: Map.get(storeproduct, :store_id),
-                  warehouseproduct_id: Map.get(storeproduct, :warehouseproduct_id),
-                  storeproduct_id: Map.get(storeproduct, :id)
-                })
-
-              changeset 
-              |> put_change(:store_product_changeset, %{s_changeset: s_changeset, r_changeset: r_changeset})
-              # |> put_change(:warehouseproduct_id, storeproduct)
-            else
-              changeset |> put_change(:store_product_changeset, %{s_changeset: s_changeset})
-            end
-            
+                        
         end
       end
     end
 
   end
- 
 end

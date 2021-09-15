@@ -71,7 +71,6 @@ defmodule InterBack.StoreSales do
           |> Multi.insert(:store_sale, changeset_results)
           |> Multi.update(:store_product, store_product_changeset)
           |> Repo.transaction()
-          |> IO.inspect(label: "RUNNING ON REORDER FALSE")
 
         case multi_results do
           {:ok, %{store_sale: store_sale, store_product: _store_product}} ->
@@ -86,6 +85,10 @@ defmodule InterBack.StoreSales do
                 ],
                 valid?: false
             }
+        end
+
+        else 
+          {:error, changeset_results}
         end
 
       else
@@ -112,10 +115,13 @@ defmodule InterBack.StoreSales do
                 valid?: false
             }
         end
+
+        else 
+          {:error, changeset_results}
+        end
+        
       end
-    else 
-      {:error, changeset_results}
-    end 
+
   end
 
   @doc """

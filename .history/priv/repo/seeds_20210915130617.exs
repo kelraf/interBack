@@ -102,7 +102,6 @@ defmodule Seeds do
             |> createWarehouseProducts()
 
         createStoreAttendantRelationShip()
-        
     end
     
 end

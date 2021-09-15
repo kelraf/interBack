@@ -4,9 +4,10 @@ defmodule InterBack.StoreSales do
   """
 
   import Ecto.Query, warn: false
-  alias InterBack.{Repo, StoreSales.StoreSale}
-  import Ecto.Changeset
-  alias Ecto.Multi
+  alias InterBack.Repo
+
+  alias InterBack.StoreSales.StoreSale
+
   @doc """
   Returns the list of storesales.
 
@@ -59,63 +60,31 @@ defmodule InterBack.StoreSales do
         |> get_field(:store_product_changeset)
         |> Map.get(:s_changeset)
 
-        reorder_changeset = 
-          changeset_results
-          |> get_field(:store_product_changeset)
-          |> Map.get(:r_changeset)
+    #   multi_results = 
+    #     Multi.new()
+    #     |> Multi.insert(:store_product, changeset_results)
+    #     |> Multi.update(:warehouse_product, _product_changeset)
+    #     |> Repo.transaction()
 
-      if reorder_changeset == nil do
+    #   case multi_results do
+    #     {:ok, %{store_product: store_product, warehouse_product: _warehouse_product}} ->
+    #       {:ok, store_product}
+    #     {:error, _failed_operation, _failed_value, _changes_so_far} -> 
+    #       {
+    #         :error,
+    #           action: :insert,
+    #           changes: %{},
+    #           errors: [
+    #             transation: {"Failed"}              
+    #           ],
+    #           valid?: false
+    #       }
+    #   end
 
-        multi_results = 
-          Multi.new()
-          |> Multi.insert(:store_sale, changeset_results)
-          |> Multi.update(:store_product, store_product_changeset)
-          |> Repo.transaction()
-          |> IO.inspect(label: "RUNNING ON REORDER FALSE")
-
-        case multi_results do
-          {:ok, %{store_sale: store_sale, store_product: _store_product}} ->
-            {:ok, store_sale}
-          {:error, _failed_operation, _failed_value, _changes_so_far} -> 
-            {
-              :error,
-                action: :insert,
-                changes: %{},
-                errors: [
-                  transation: {"Failed"}              
-                ],
-                valid?: false
-            }
-        end
-
-      else
-
-        multi_results = 
-          Multi.new()
-          |> Multi.insert(:store_sale, changeset_results)
-          |> Multi.update(:store_product, store_product_changeset)
-          |> Multi.insert(:reorder, reorder_changeset)
-          |> Repo.transaction()
-          |> IO.inspect(label: "RUNNING ON REORDER TRUE")
-
-        case multi_results do
-          {:ok, %{store_sale: store_sale, store_product: _store_product, reorder: _reorder}} ->
-            {:ok, store_sale}
-          {:error, _failed_operation, _failed_value, _changes_so_far} -> 
-            {
-              :error,
-                action: :insert,
-                changes: %{},
-                errors: [
-                  transation: {"Failed"}              
-                ],
-                valid?: false
-            }
-        end
-      end
     else 
       {:error, changeset_results}
-    end 
+    end
+
   end
 
   @doc """

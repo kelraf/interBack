@@ -35,7 +35,7 @@ defmodule Seeds do
 
     defp createStoreAttendant do
 
-        Accounts.create_user(%{
+        attendant = Accounts.create_user(%{
             name: "Store Attendant One",
             email: "kelraf@gmail.com",
             password: "kelraf",
@@ -45,13 +45,6 @@ defmodule Seeds do
 
 
         
-    end
-
-    defp createStoreAttendantRelationShip do
-        Storeattendats.create_storeattendant(%{
-            user_id: 1,
-            store_id: 1
-        })
     end
 
     defp createWarehouseProducts({:ok, %{user_id: user_id}}) do
@@ -98,11 +91,8 @@ defmodule Seeds do
         createStoreAttendant()
 
         createSuperUser()
-            |> createStore()
-            |> createWarehouseProducts()
-
-        createStoreAttendantRelationShip()
-        
+        |> createStore()
+        |> createWarehouseProducts()
     end
     
 end

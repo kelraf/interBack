@@ -5,8 +5,8 @@ defmodule InterBack.StoreProducts do
 
   import Ecto.Query, warn: false
   import Ecto.Changeset
-  alias Ecto.Multi
   alias InterBack.{Repo, StoreProducts.StoreProduct, WarehouseProducts.WarehouseProduct}
+  alias Ecto.Multi
 
   @doc """
   Returns the list of storeproducts.

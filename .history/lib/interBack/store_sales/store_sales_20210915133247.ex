@@ -88,6 +88,10 @@ defmodule InterBack.StoreSales do
             }
         end
 
+        else 
+          {:error, changeset_results}
+        end
+
       else
 
         multi_results = 
@@ -112,10 +116,13 @@ defmodule InterBack.StoreSales do
                 valid?: false
             }
         end
+
+        else 
+          {:error, changeset_results}
+        end
+        
       end
-    else 
-      {:error, changeset_results}
-    end 
+
   end
 
   @doc """

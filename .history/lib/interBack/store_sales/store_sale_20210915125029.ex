@@ -67,9 +67,7 @@ defmodule InterBack.StoreSales.StoreSale do
                   storeproduct_id: Map.get(storeproduct, :id)
                 })
 
-              changeset 
-              |> put_change(:store_product_changeset, %{s_changeset: s_changeset, r_changeset: r_changeset})
-              # |> put_change(:warehouseproduct_id, storeproduct)
+              changeset |> put_change(:store_product_changeset, %{s_changeset: s_changeset})
             else
               changeset |> put_change(:store_product_changeset, %{s_changeset: s_changeset})
             end
