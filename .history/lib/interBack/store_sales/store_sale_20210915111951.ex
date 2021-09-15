@@ -21,7 +21,6 @@ defmodule InterBack.StoreSales.StoreSale do
     |> cast(attrs, [:storeproduct_id, :quantity, :warehouseproduct_id, :store_id, :user_id])
     |> validate_required([:storeproduct_id, :quantity, :warehouseproduct_id, :store_id, :user_id])
     |> noZeroQuantity
-    |> calcSale
   end
 
   defp noZeroQuantity(changeset) do
