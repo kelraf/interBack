@@ -4,9 +4,10 @@ defmodule InterBack.StoreSales do
   """
 
   import Ecto.Query, warn: false
-  alias InterBack.{Repo, StoreSales.StoreSale}
-  import Ecto.Changeset
-  alias Ecto.Multi
+  alias InterBack.Repo
+
+  alias InterBack.StoreSales.StoreSale
+
   @doc """
   Returns the list of storesales.
 
@@ -56,29 +57,29 @@ defmodule InterBack.StoreSales do
       
       store_product_changeset = 
         changeset_results
-        |> get_field(:store_product_changeset)
+        |> get_field(:new_warehouseproduct_changeset)
         |> Map.get(:s_changeset)
 
-      multi_results = 
-        Multi.new()
-        |> Multi.insert(:store_sale, changeset_results)
-        |> Multi.update(:store_product, store_product_changeset)
-        |> Repo.transaction()
+    #   multi_results = 
+    #     Multi.new()
+    #     |> Multi.insert(:store_product, changeset_results)
+    #     |> Multi.update(:warehouse_product, _product_changeset)
+    #     |> Repo.transaction()
 
-      case multi_results do
-        {:ok, %{store_sale: store_sale, store_product: _store_product}} ->
-          {:ok, store_sale}
-        {:error, _failed_operation, _failed_value, _changes_so_far} -> 
-          {
-            :error,
-              action: :insert,
-              changes: %{},
-              errors: [
-                transation: {"Failed"}              
-              ],
-              valid?: false
-          }
-      end
+    #   case multi_results do
+    #     {:ok, %{store_product: store_product, warehouse_product: _warehouse_product}} ->
+    #       {:ok, store_product}
+    #     {:error, _failed_operation, _failed_value, _changes_so_far} -> 
+    #       {
+    #         :error,
+    #           action: :insert,
+    #           changes: %{},
+    #           errors: [
+    #             transation: {"Failed"}              
+    #           ],
+    #           valid?: false
+    #       }
+    #   end
 
     else 
       {:error, changeset_results}

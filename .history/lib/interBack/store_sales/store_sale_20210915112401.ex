@@ -46,13 +46,13 @@ defmodule InterBack.StoreSales.StoreSale do
       if storeproduct_id == nil do
         changeset
       else
-        storeproduct = Repo.get_by(StoreProduct, id: storeproduct_id)
+        storeproduct = Repo.get_by(StoreProduct, id: storeproduct_id) |> IO.inspect
         cond do
           storeproduct == nil -> add_error(changeset, :storeproduct_id, "The store product does not exist")
           sale_quantity > Map.get(storeproduct, :quantity) -> add_error(changeset, :quantity, "Quantity Exceeds the available products in store")
-          true ->
-            s_changeset = storeproduct |> StoreProduct.changeset(%{quantity: Map.get(storeproduct, :quantity) - sale_quantity}) |> delete_change(:new_warehouseproduct_changeset)
-            changeset |> put_change(:store_product_changeset, %{s_changeset: s_changeset}) |> IO.inspect(label: "XXXXXXXXXXXXXXXXXXXXXXXX 4")
+          true ->  
+            s_changeset = storeproduct |> StoreProduct.changeset(%{quantity: Map.get(storeproduct, :quantity) - sale_quantity})
+            changeset |> put_change(:store_product_changeset, %{s_changeset: s_changeset}) |> IO.inspect
             
         end
       end
