@@ -19,10 +19,10 @@ database_url =
 #   pool_size: 2 # Free tier db only allows 4 connections. Rolling deploys need pool_size*(n+1) connections where n is the number of app replicas.
 
 
-config :interBack, InterBack.Repo,
-  ssl: true,
-  url: database_url,
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+# config :interBack, InterBack.Repo,
+#   ssl: true,
+#   url: database_url,
+#   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
