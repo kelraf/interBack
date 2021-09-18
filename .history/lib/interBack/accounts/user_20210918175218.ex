@@ -57,20 +57,11 @@ defmodule InterBack.Accounts.User do
   end
 
   defp validatePasswords(changeset) do
-    if get_field(changeset, :password) == nil do
-      changeset
+    if get_field(changeset, :password) != get_field(changeset, :password_confirmation)  do
+      add_error(changeset, :password_confirmation, "Passwords must match")
     else
-      if get_field(changeset, :password_confirmation) do
-        changeset
-      else
-        if get_field(changeset, :password) != get_field(changeset, :password_confirmation)  do
-          add_error(changeset, :password_confirmation, "Passwords must match")
-        else
-          put_change(changeset, :password, Comeonin.Bcrypt.hashpwsalt(get_field(changeset, :password)))
-        end
-      end
+      put_change(changeset, :password, Comeonin.Bcrypt.hashpwsalt(get_field(changeset, :password)))
     end
-
   end
   
 end
