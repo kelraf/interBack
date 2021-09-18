@@ -19,8 +19,7 @@ defmodule InterBackWeb.ReorderView do
       processed: reorder.processed,
       quantity: reorder.quantity,
       store: render_one(reorder.store, __MODULE__, "store.json", as: :store),
-      warehouseproduct: render_one(reorder.warehouseproduct, __MODULE__, "warehouse_product.json", as: :warehouse_product),
-      storeproduct: render_one(reorder.storeproduct, __MODULE__, "store_product.json", as: :store_product)
+      warehouseproduct: render_one(reorder.warehouseproduct, __MODULE__, "warehouse_product.json", as: :warehouse_product)
     }
   end
 
@@ -38,16 +37,6 @@ defmodule InterBackWeb.ReorderView do
       id: store.id,
       user_id: store.user_id,
       store_name: store.store_name
-    }
-  end
-
-  def render("store_product.json", %{store_product: store_product}) do
-    %{
-      id: store_product.id,
-      store_id: store_product.store_id,
-      quantity: store_product.quantity,
-      min_quantity: store_product.min_quantity,
-      user_id: store_product.user_id
     }
   end
 

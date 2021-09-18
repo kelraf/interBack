@@ -1,7 +1,8 @@
 defmodule InterBackWeb.ReorderController do
   use InterBackWeb, :controller
 
-  alias InterBack.{Reorders, Reorders.Reorder, Repo}
+  alias InterBack.Reorders
+  alias InterBack.Reorders.Reorder
 
   action_fallback InterBackWeb.FallbackController
 
@@ -25,9 +26,8 @@ defmodule InterBackWeb.ReorderController do
 
   defp preloader(data) do
     data |> Repo.preload([
-      :warehouseproduct,
-      :store,
-      :storeproduct
+      storeattendant: [:user],
+      storeproducts: []
     ])
   end
   
