@@ -11,7 +11,6 @@ defmodule InterBackWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug CORSPlug
     
   end
 
@@ -28,6 +27,7 @@ defmodule InterBackWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", InterBackWeb do
     pipe_through :api
+    plug CORSPlug
 
     post "/users/auth/register", UserController, :create
     post "/users/auth/login", UserController, :login

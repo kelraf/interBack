@@ -6,6 +6,7 @@ defmodule InterBack.Reorders.Reorder do
   schema "reorders" do
     field :processed, :boolean, default: false
     field :quantity, :integer, default: 0
+    field :store_id, :integer
     field :changesets, :map, virtual: true
     belongs_to(:warehouseproduct, WarehouseProduct)
     belongs_to(:storeproduct, StoreProduct)
