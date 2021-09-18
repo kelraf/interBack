@@ -13,6 +13,6 @@ defmodule InterBack.Storeattendats.Storeattendant do
   def changeset(storeattendant, attrs) do
     storeattendant
     |> cast(attrs, [:user_id, :store_id])
-    |> validate_required([:store_id])
+    |> validate_required([:user_id, :store_id])
   end
 end
