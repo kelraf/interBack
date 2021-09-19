@@ -60,7 +60,7 @@ defmodule InterBack.Accounts.User do
     if get_field(changeset, :password) == nil do
       changeset
     else
-      if get_field(changeset, :password_confirmation) == nil do
+      if get_field(changeset, :password_confirmation) do
         changeset
       else
         if get_field(changeset, :password) != get_field(changeset, :password_confirmation)  do

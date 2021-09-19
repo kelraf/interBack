@@ -26,8 +26,7 @@ defmodule InterBackWeb.ReorderController do
   defp preloader(data) do
     data |> Repo.preload([
       :warehouseproduct,
-      :store,
-      :storeproduct
+      :store
     ])
   end
   

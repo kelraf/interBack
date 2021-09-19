@@ -1,7 +1,7 @@
 defmodule InterBackWeb.UserController do
   use InterBackWeb, :controller
 
-  alias InterBack.{Accounts, Accounts.User, Auth, Verification, Repo}
+  alias InterBack.{Accounts, Accounts.User, Auth, Verification}
   
   action_fallback InterBackWeb.FallbackController
 
@@ -9,7 +9,7 @@ defmodule InterBackWeb.UserController do
   def login(conn, %{"user" => user}) do
 
     case Auth.login user do
-      {:ok, user, token} -> json(conn, %{success: true, user: user |> Map.from_struct |> Map.drop([:__meta__, :inserted_at, :password, :updated_at, :storeattendant]), token: token, message: "Login Successful."})
+      {:ok, user, token} -> json(conn, %{success: true, user: user |> Map.from_struct |> IO.inspect |> Map.drop([:__meta__, :inserted_at, :password, :updated_at]), token: token, message: "Login Successful."})
       {:error, msg} -> json(conn, %{success: false, message: msg})
       _ -> json(conn, %{success: false, message: "Oops!!! Unknown Error"})
     end

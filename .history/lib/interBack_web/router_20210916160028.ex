@@ -38,7 +38,6 @@ defmodule InterBackWeb.Router do
 
     get "/users", UserController, :index
     get "/users/:id", UserController, :show
-    put "/users/:id", UserController, :update
     delete "/users/:id", UserController, :delete
     resources "/stores", StoreController
     resources "/storeattendants", StoreattendantController
