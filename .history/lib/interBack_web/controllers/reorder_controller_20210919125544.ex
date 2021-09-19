@@ -2,7 +2,6 @@ defmodule InterBackWeb.ReorderController do
   use InterBackWeb, :controller
 
   alias InterBack.{Reorders, Reorders.Reorder, Repo}
-  import Ecto.Query, only: [from: 2]
 
   action_fallback InterBackWeb.FallbackController
 
@@ -18,9 +17,9 @@ defmodule InterBackWeb.ReorderController do
 
   def get_by_store_id(conn, %{"id" => id}) do
 
-    reorders = Repo.all(from r in Reorder, where: r.store_id == ^id, select: r)
+    reorders = Repo.all(from sp in Reorder, where: sp.store_id == ^id, select: sp)
 
-    render(conn, "index.json", reorders: reorders |> preloader())
+    render(conn, "index.json", storeproducts: reorders |> preloader())
 
   end
 

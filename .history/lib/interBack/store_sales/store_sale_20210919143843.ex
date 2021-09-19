@@ -9,6 +9,7 @@ defmodule InterBack.StoreSales.StoreSale do
     field :store_id, :integer
     field :storeproduct_id, :integer
     field :user_id, :integer
+    field :warehouseproduct_id, :integer
     field :store_product_changeset, :map, virtual: true
 
     belongs_to(:warehouseproduct, WarehouseProduct)

@@ -2,7 +2,7 @@ defmodule InterBackWeb.StoreSaleController do
   use InterBackWeb, :controller
 
   alias InterBack.{StoreSales, StoreSales.StoreSale, Repo}
-  import Ecto.Query, only: [from: 2]
+
   action_fallback InterBackWeb.FallbackController
 
   def index(conn, _params) do

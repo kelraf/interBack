@@ -2,7 +2,7 @@ defmodule InterBackWeb.StoreSaleController do
   use InterBackWeb, :controller
 
   alias InterBack.{StoreSales, StoreSales.StoreSale, Repo}
-  import Ecto.Query, only: [from: 2]
+
   action_fallback InterBackWeb.FallbackController
 
   def index(conn, _params) do
@@ -22,14 +22,6 @@ defmodule InterBackWeb.StoreSaleController do
   def show(conn, %{"id" => id}) do
     store_sale = StoreSales.get_store_sale!(id)
     render(conn, "show.json", store_sale: store_sale |> preloader)
-  end
-
-  def get_by_store_id(conn, %{"id" => id}) do
-
-    storesales = Repo.all(from s in StoreSale, where: s.store_id == ^id, select: s)
-
-    render(conn, "index.json", storesales: storesales |> preloader)
-
   end
 
   def update(conn, %{"id" => id, "store_sale" => store_sale_params}) do

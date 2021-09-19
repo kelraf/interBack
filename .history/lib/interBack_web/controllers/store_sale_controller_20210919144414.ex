@@ -2,12 +2,12 @@ defmodule InterBackWeb.StoreSaleController do
   use InterBackWeb, :controller
 
   alias InterBack.{StoreSales, StoreSales.StoreSale, Repo}
-  import Ecto.Query, only: [from: 2]
+
   action_fallback InterBackWeb.FallbackController
 
   def index(conn, _params) do
     storesales = StoreSales.list_storesales()
-    render(conn, "index.json", storesales: storesales |> preloader)
+    render(conn, "index.json", storesales: storesales)
   end
 
   def create(conn, %{"store_sale" => store_sale_params}) do
@@ -15,28 +15,20 @@ defmodule InterBackWeb.StoreSaleController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.store_sale_path(conn, :show, store_sale))
-      |> render("show.json", store_sale: store_sale |> preloader)
+      |> render("show.json", store_sale: store_sale)
     end
   end
 
   def show(conn, %{"id" => id}) do
     store_sale = StoreSales.get_store_sale!(id)
-    render(conn, "show.json", store_sale: store_sale |> preloader)
-  end
-
-  def get_by_store_id(conn, %{"id" => id}) do
-
-    storesales = Repo.all(from s in StoreSale, where: s.store_id == ^id, select: s)
-
-    render(conn, "index.json", storesales: storesales |> preloader)
-
+    render(conn, "show.json", store_sale: store_sale)
   end
 
   def update(conn, %{"id" => id, "store_sale" => store_sale_params}) do
     store_sale = StoreSales.get_store_sale!(id)
 
     with {:ok, %StoreSale{} = store_sale} <- StoreSales.update_store_sale(store_sale, store_sale_params) do
-      render(conn, "show.json", store_sale: store_sale |> preloader)
+      render(conn, "show.json", store_sale: store_sale)
     end
   end
 

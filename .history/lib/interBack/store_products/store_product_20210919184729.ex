@@ -21,23 +21,7 @@ defmodule InterBack.StoreProducts.StoreProduct do
     store_product
     |> cast(attrs, [:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
     |> validate_required([:store_id, :quantity, :min_quantity, :user_id, :warehouseproduct_id])
-    |> validateQuantity
-    |> checkProductExistInStore()
     |> innitialDispatchProduct(update)
-  end
-
-  defp validateQuantity(changeset) do
-
-    min_quantity = get_field(changeset, :min_quantity)
-    quantity = get_field(changeset, :quantity)
-
-    cond do
-      min_quantity == nil -> changeset
-      quantity == nil -> changeset
-      min_quantity > quantity -> add_error(changeset, :quantity, "Quantity must be equal or greater than Min Quantity")
-      true -> changeset
-    end
-
   end
 
   defp checkProductExistInStore(changeset) do
@@ -47,14 +31,8 @@ defmodule InterBack.StoreProducts.StoreProduct do
     cond do
       warehouse_product_id == nil -> changeset
       store_id == nil -> changeset
-      changeset.data.id !== nil -> changeset
       true ->
-        storeproducts = Repo.all(from s_p in __MODULE__, where: s_p.store_id == ^store_id and s_p.warehouseproduct_id == ^warehouse_product_id, select: s_p)
-        if Enum.empty?(storeproducts) do
-          changeset
-        else
-          add_error(changeset, :store_id, "The Product Exist In Store")
-        end
+                
     end
 
   end
