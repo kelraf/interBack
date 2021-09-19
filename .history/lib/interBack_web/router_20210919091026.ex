@@ -38,20 +38,17 @@ defmodule InterBackWeb.Router do
 
     get "/users", UserController, :index
     get "/users/:id", UserController, :show
-    put "/users/:id", UserController, :update
+    put "users/:id", UserController, :update
     delete "/users/:id", UserController, :delete
     resources "/stores", StoreController
     resources "/storeattendants", StoreattendantController
     resources "/warehouseproducts", WarehouseProductController
     resources "/storeproducts", StoreProductController
-    get "/storeproducts/stores/:id", StoreProductController, :get_by_store_id
     resources "/storesales", StoreSaleController
-    get "/storesales/stores/:id", StoreSaleController, :get_by_store_id
 
     get "/reorders", ReorderController, :index
     get "/reorders/:id", ReorderController, :show
     put "/reorders/:id", ReorderController, :update
-    get "/reorders/stores/:id", ReorderController, :get_by_store_id
 
   end
 

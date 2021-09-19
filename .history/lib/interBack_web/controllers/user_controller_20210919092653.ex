@@ -9,7 +9,7 @@ defmodule InterBackWeb.UserController do
   def login(conn, %{"user" => user}) do
 
     case Auth.login user do
-      {:ok, user, token} -> json(conn, %{success: true, user: user |> attendantData |> Map.from_struct |> Map.drop([:__meta__, :inserted_at, :password, :updated_at, :storeattendant]), token: token, message: "Login Successful."})
+      {:ok, user, token} -> json(conn, %{success: true, user: user |> Map.from_struct |> Map.drop([:__meta__, :inserted_at, :password, :updated_at, :storeattendant]), token: token, message: "Login Successful."})
       {:error, msg} -> json(conn, %{success: false, message: msg})
       _ -> json(conn, %{success: false, message: "Oops!!! Unknown Error"})
     end
@@ -37,6 +37,7 @@ defmodule InterBackWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    IO.inspect user_params
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn
       |> put_status(:created)
@@ -65,24 +66,4 @@ defmodule InterBackWeb.UserController do
       send_resp(conn, :no_content, "")
     end
   end
-
-  defp attendantData(user) do
-
-    if %User{} = user do
-      if user.role == 3 do
-        user_ = user |> Repo.preload(:storeattendant)
-        if user_.storeattendant == nil do
-          user |> Map.put(:store_id, nil)
-        else
-          user |> Map.put(:store_id, user_.storeattendant.store_id)
-        end
-      else
-        user |> Map.put(:store_id, nil)
-      end
-    else
-      user
-    end
-
-  end
-
 end

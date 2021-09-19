@@ -44,14 +44,11 @@ defmodule InterBackWeb.Router do
     resources "/storeattendants", StoreattendantController
     resources "/warehouseproducts", WarehouseProductController
     resources "/storeproducts", StoreProductController
-    get "/storeproducts/stores/:id", StoreProductController, :get_by_store_id
     resources "/storesales", StoreSaleController
-    get "/storesales/stores/:id", StoreSaleController, :get_by_store_id
 
     get "/reorders", ReorderController, :index
     get "/reorders/:id", ReorderController, :show
     put "/reorders/:id", ReorderController, :update
-    get "/reorders/stores/:id", ReorderController, :get_by_store_id
 
   end
 

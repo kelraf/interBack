@@ -48,8 +48,6 @@ defmodule InterBack.Accounts.User do
         end
       role > 3 ->
         add_error(changeset, :role, "Invalid role")
-      role == 2 ->
-        add_error(changeset, :role, "Invalid role")
       role <= 0 ->
         add_error(changeset, :role, "Invalid role")
       true ->
@@ -74,20 +72,5 @@ defmodule InterBack.Accounts.User do
     end
 
   end
-
-  # defp validateRole(changeset) do
-  #   role = get_field(changeset, :role)
-
-  #   if role == nil do
-  #     changeset
-  #   else
-  #     if role not in [1, 3] do
-  #       add_error(changeset, :role, "Invalid Role")
-  #     else
-  #       changeset
-  #     end
-  #   end
-
-  # end
   
 end

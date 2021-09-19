@@ -15,8 +15,8 @@ defmodule InterBackWeb.UserView do
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
-      # password: user.password
+      role: user.role
+      password: user.password
     }
   end
  

@@ -13,8 +13,7 @@ defmodule InterBack.Auth do
         end
     end
 
-    defp passwordVerify({:ok, %User{} = user}, password) do
-        IO.inspect user
+    defp passwordVerify({:ok, user}, password) do
         if Comeonin.Bcrypt.checkpw(password, user.password) do
             {:ok, user}
         else

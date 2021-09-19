@@ -17,8 +17,7 @@ defmodule InterBackWeb.StoreSaleView do
       quantity: store_sale.quantity,
       warehouseproduct_id: store_sale.warehouseproduct_id,
       store_id: store_sale.store_id,
-      user_id: store_sale.user_id,
-      warehouseproduct: render_one(store_sale.warehouseproduct, __MODULE__, "warehouse_product.json", as: :warehouse_product)
+      user_id: store_sale.user_id
     }
   end
 
@@ -27,8 +26,10 @@ defmodule InterBackWeb.StoreSaleView do
       id: warehouse_product.id,
       product_name: warehouse_product.product_name,
       quantity: warehouse_product.quantity,
-      category: warehouse_product.category
+      category: warehouse_product.category,
+      user: render_one(warehouse_product.user, UserView, "user.json", as: :user),
+      reorders: render_many(warehouse_product.reorders, __MODULE__, "reorder.json", as: :reorder)
     }
   end
-
+  
 end

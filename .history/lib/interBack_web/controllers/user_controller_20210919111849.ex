@@ -9,7 +9,7 @@ defmodule InterBackWeb.UserController do
   def login(conn, %{"user" => user}) do
 
     case Auth.login user do
-      {:ok, user, token} -> json(conn, %{success: true, user: user |> attendantData |> Map.from_struct |> Map.drop([:__meta__, :inserted_at, :password, :updated_at, :storeattendant]), token: token, message: "Login Successful."})
+      {:ok, user, token} -> json(conn, %{success: true, store_id: user |> attendantData, user: user |> Map.from_struct |> Map.drop([:__meta__, :inserted_at, :password, :updated_at, :storeattendant]), token: token, message: "Login Successful."})
       {:error, msg} -> json(conn, %{success: false, message: msg})
       _ -> json(conn, %{success: false, message: "Oops!!! Unknown Error"})
     end
@@ -37,6 +37,7 @@ defmodule InterBackWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    IO.inspect user_params
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn
       |> put_status(:created)
