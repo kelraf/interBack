@@ -18,7 +18,7 @@ defmodule InterBack.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :name, :role, :password_confirmation])
+    |> cast(attrs, [:email, :password, :name, :role])
     |> validate_required([:email, :password, :name, :role, :password_confirmation])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 6)
@@ -41,21 +41,11 @@ defmodule InterBack.Accounts.User do
       role == nil ->
         changeset
       role == 1 ->
-
-        if changeset.data.id == nil do
-
-          if Repo.get_by(__MODULE__, role: 1) == nil do
-            changeset
-          else
-            add_error(changeset, :role, "invalid role")
-          end
-
-        else
-          
+        if Repo.get_by(__MODULE__, role: 1) == nil do
           changeset
-
+        else
+          add_error(changeset, :role, "invalid role")
         end
-        
       role > 3 ->
         add_error(changeset, :role, "Invalid role")
       role == 2 ->
@@ -79,7 +69,6 @@ defmodule InterBack.Accounts.User do
           add_error(changeset, :password_confirmation, "Passwords must match")
         else
           put_change(changeset, :password, Comeonin.Bcrypt.hashpwsalt(get_field(changeset, :password)))
-          put_change(changeset, :password_confirmation, nil)
         end
       end
     end

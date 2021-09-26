@@ -17,8 +17,6 @@ defmodule InterBackWeb do
   and import those modules here.
   """
 
-  # x = {:-, [context: Elixir, import: Kernel], [{:+, [context: Elixir, import: Kernel], [2, 2]}, 1]}
-
   def controller do
     quote do
       use Phoenix.Controller, namespace: InterBackWeb

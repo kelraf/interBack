@@ -7,7 +7,7 @@ defmodule InterBack.AccountsTest do
     alias InterBack.Accounts.User
 
     @valid_attrs %{email: "kelraf@gmail.com", password: "kelraf", password_confirmation: "kelraf", role: 1, name: "kelvin Raphael"}
-    @update_attrs %{email: "kelraf@gmail.com", password: "kelraf", password_confirmation: "kelraf", name: "kelvin Raphael Updated"}
+    @update_attrs %{email: "kelraf@gmail.com", password: "kelraf", password_confirmation: "kelraf", role: 1, name: "kelvin Raphael Updated"}
     @invalid_attrs %{email: nil, password: nil, password_confirmation: nil, role: 1, name: nil}
 
     def user_fixture(attrs \\ %{}) do

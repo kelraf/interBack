@@ -41,21 +41,11 @@ defmodule InterBack.Accounts.User do
       role == nil ->
         changeset
       role == 1 ->
-
-        if changeset.data.id == nil do
-
-          if Repo.get_by(__MODULE__, role: 1) == nil do
-            changeset
-          else
-            add_error(changeset, :role, "invalid role")
-          end
-
-        else
-          
+        if Repo.get_by(__MODULE__, role: 1) == nil do
           changeset
-
+        else
+          add_error(changeset, :role, "invalid role")
         end
-        
       role > 3 ->
         add_error(changeset, :role, "Invalid role")
       role == 2 ->

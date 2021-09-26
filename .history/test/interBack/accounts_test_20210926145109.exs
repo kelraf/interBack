@@ -41,7 +41,7 @@ defmodule InterBack.AccountsTest do
 
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
-      assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
+      assert {:ok, %User{} = user} = Accounts.update_user(user, Map.drop(@update_attrs, [:role]))
       assert user.email == @update_attrs.email
       # assert user.password == "some updated password"
     end

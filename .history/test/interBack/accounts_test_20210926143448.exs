@@ -7,7 +7,7 @@ defmodule InterBack.AccountsTest do
     alias InterBack.Accounts.User
 
     @valid_attrs %{email: "kelraf@gmail.com", password: "kelraf", password_confirmation: "kelraf", role: 1, name: "kelvin Raphael"}
-    @update_attrs %{email: "kelraf@gmail.com", password: "kelraf", password_confirmation: "kelraf", name: "kelvin Raphael Updated"}
+    @update_attrs %{email: "kelraf@gmail.com", password: "kelraf", password_confirmation: "kelraf", role: 1, name: "kelvin Raphael Updated"}
     @invalid_attrs %{email: nil, password: nil, password_confirmation: nil, role: 1, name: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -42,8 +42,8 @@ defmodule InterBack.AccountsTest do
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
       assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
-      assert user.email == @update_attrs.email
-      # assert user.password == "some updated password"
+      assert user.email == "some updated email"
+      assert user.password == "some updated password"
     end
 
     test "update_user/2 with invalid data returns error changeset" do
